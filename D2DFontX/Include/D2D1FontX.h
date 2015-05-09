@@ -85,9 +85,7 @@ public:
 	void RenderText(std::wstring text);
 	void Dipose();
 	float clientHeight, clientWidth;
-
-	std::wstring Text;
-
+	
 };
 
 #endif

@@ -63,11 +63,6 @@ void D2DFontX::RenderText(std::wstring text) {
 
 	TextRenderTarget->BeginDraw();
 
-	//Create our string
-	std::wostringstream printString;
-	printString << text;
-	Text = printString.str();
-
 	//Set the Font Color
 	D2D1_COLOR_F FontColor = D2D1::ColorF(fontColor.Red(),fontColor.Green(),fontColor.Blue(),fontColor.Alpha());
 	//Set the brush color D2D will use to draw with
@@ -77,8 +72,8 @@ void D2DFontX::RenderText(std::wstring text) {
 
 	//Draw the Text
 	TextRenderTarget->DrawTextW(
-		Text.c_str(),
-		wcslen(Text.c_str()),
+		text.c_str(),
+		wcslen(text.c_str()),
 		TextFormat,
 		layoutRect,
 		TextBrush
