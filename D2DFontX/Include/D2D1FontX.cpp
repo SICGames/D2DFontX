@@ -45,7 +45,7 @@ bool D2DFontX::Create(IDXGISwapChain *d3d11SwapChain, FontSettings &settings, HW
 		return false;
 	}
 
-
+	
 	result = DwriteFactory->CreateTextFormat(settings.fontFamily.c_str(), nullptr, settings.fontWeight, settings.fontStyle, DWRITE_FONT_STRETCH_NORMAL, settings.fontSize, L"", &TextFormat);
 	if (FAILED(result)) {
 		return result;
@@ -55,9 +55,27 @@ bool D2DFontX::Create(IDXGISwapChain *d3d11SwapChain, FontSettings &settings, HW
 	if (FAILED(result)) {
 		return result;
 	}
-
+	
 	return true;
 
+}
+void D2DFontX::Translate(float x, float y) {
+	translation = D2D1::Matrix3x2F::Translation(x, y);
+}
+void D2DFontX::Scale(float x, float y, float centerX, float centerY) {
+	scale = D2D1::Matrix3x2F::Scale(x, y, D2D1::Point2F(centerX,centerY));
+
+}
+void D2DFontX::Skew(float x, float y, float centerX, float centerY) {
+	skew = D2D1::Matrix3x2F::Skew(x, y, D2D1::Point2F(centerX, centerY));
+
+}
+void D2DFontX::Rotate(float x, float y, float angle) {
+	rotation = D2D1::Matrix3x2F::Rotation(angle,D2D1::Point2F(x, y));
+
+}
+void D2DFontX::setWorldTransform(D2D1::Matrix3x2F &worldMatrix) {
+	World = worldMatrix;
 }
 void D2DFontX::RenderText(std::wstring text) {
 
@@ -69,6 +87,8 @@ void D2DFontX::RenderText(std::wstring text) {
 	TextBrush->SetColor(FontColor);
 	//Create the D2D Render Area
 	D2D1_RECT_F layoutRect = D2D1::RectF(0, 0, clientWidth,clientHeight);
+	
+	TextRenderTarget->SetTransform(World);
 
 	//Draw the Text
 	TextRenderTarget->DrawTextW(

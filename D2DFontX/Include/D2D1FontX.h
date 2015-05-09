@@ -68,7 +68,8 @@ private:
 	ID2D1Factory *D2D1Factory;
 	IDWriteTextFormat *TextFormat;
 	FONTCOLOR fontColor;
-	
+	D2D1::Matrix3x2F World, translation, rotation, scale, skew;
+
 public:
 
 	// @-- Just a simple constructor.
@@ -83,6 +84,28 @@ public:
 	//-- LPWIDESTRING = const wchar_t* 
 	//-- WIDESTRING = const wchar_t
 	void RenderText(std::wstring text);
+	//--Set the translate point to X Y AXIS.
+	void Translate(float x, float y);
+	//-- Set the scale point X Y in Center Point.
+	void Scale(float x, float y, float centerX, float centerY);
+	//-- Set the rotation.
+	void Rotate(float x, float y, float angle);
+	//-- Set the Skew
+	void Skew(float x, float y, float centerX, float centerY);
+	//-- get the rotation matrix.
+	D2D1::Matrix3x2F getRotationMatrix() const { return rotation; }
+	//-- get the translation matrix
+	D2D1::Matrix3x2F getTranslationMatrix() const { return translation; }
+	//-- get the scale matrix
+	D2D1::Matrix3x2F getScaleMatrix() const { return scale;}
+	//-- get the skew matrix
+	D2D1::Matrix3x2F getSkewMatrix() const { return skew; }
+	//-- set the World Transform how ever you like. (E.G) !!!! --- THE MATRIXS MUST BE SET BEFORE OBTAINING WORLD TRANSFORMATION !!!!
+	//-- D2D1::Matrix3x2F world = fontX->getRotationMatrix() * fontX->getTranslationMatrix();
+	//-- setWorldTransform(world);
+	void setWorldTransform(D2D1::Matrix3x2F &worldtransform);
+	
+	//-- Disposes FontX Objects.
 	void Dipose();
 	float clientHeight, clientWidth;
 	
