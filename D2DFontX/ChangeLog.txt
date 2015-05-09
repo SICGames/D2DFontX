@@ -5,3 +5,5 @@ D2DFontX Change log
    --Removed pointless storing global text inside RenderText function.
 @1.0
    --Easily transform the D2D Font around with new functions Translate, Scale, Rotate, Skew, setWorldTransform.
+@1.0 
+    -- FONTCOLOR Class corrected.
