@@ -16,6 +16,10 @@
 	#include <atlcom.h>
 #endif
 
+#pragma comment(lib, "dwrite.lib")
+#pragma comment(lib, "dxgi.lib")
+#pragma comment(lib, "d2d1.lib")
+
 #if defined(UNICODE)
 	typedef const wchar_t WIDESTRING;
 	typedef WIDESTRING* LPWIDESTRING;
@@ -28,13 +32,16 @@
 		float _color[4];
 	public:
 		FONTCOLOR() : _red(0), _green(0), _blue(0), _alpha(0) {}
-		FONTCOLOR(float red, float green, float blue, float alpha) : _red(red), _green(green), _blue(blue), _alpha(alpha) {
+		FONTCOLOR(float red, float green, float blue, float alpha) 
+		{
+			this->_red = red; this->_green = green; this->_blue = blue; this->_alpha = alpha;
 		}
+
 		FONTCOLOR(FONTCOLOR &fontColor) {
-			_color[0] = fontColor.Red();
-			_color[1] = fontColor.Green();
-			_color[2] = fontColor.Blue();
-			_color[3] = fontColor.Alpha();
+			this->_red = fontColor.Red();
+			this->_green = fontColor.Green();
+			this->_blue = fontColor.Blue();
+			this->_alpha = fontColor.Alpha();
 		}
 
 		float Red() { return _red; }
@@ -49,7 +56,7 @@
 struct FontSettings {
 	FontSettings() : fontFamily(L""), fontSize(0), fontColor(FONTCOLOR(0,0,0,0)), fontWeight(), fontStyle() {};
 
-	FontSettings(std::wstring font_Family, float font_size, FONTCOLOR &font_color, DWRITE_FONT_WEIGHT font_weight, DWRITE_FONT_STYLE font_style) : fontFamily(font_Family), 
+	FontSettings(std::wstring font_Family, float font_size, FONTCOLOR font_color, DWRITE_FONT_WEIGHT font_weight, DWRITE_FONT_STYLE font_style) : fontFamily(font_Family), 
 		fontSize(font_size), fontColor(font_color), fontWeight(font_weight), fontStyle(font_style) {
 	}
 
@@ -58,7 +65,7 @@ struct FontSettings {
 	DWRITE_FONT_STYLE fontStyle;
 
 	float fontSize;
-	FONTCOLOR &fontColor; //-- Red, Green, Blue, Alpha.
+	FONTCOLOR fontColor; //-- Red, Green, Blue, Alpha.
 };
 class D2DFontX {
 private:
