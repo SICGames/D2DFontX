@@ -46,6 +46,7 @@ bool D2DFontX::Create(IDXGISwapChain *d3d11SwapChain, FontSettings &settings, HW
 	}
 
 	
+	
 	result = DwriteFactory->CreateTextFormat(settings.fontFamily.c_str(), nullptr, settings.fontWeight, settings.fontStyle, DWRITE_FONT_STRETCH_NORMAL, settings.fontSize, L"", &TextFormat);
 	if (FAILED(result)) {
 		return result;
