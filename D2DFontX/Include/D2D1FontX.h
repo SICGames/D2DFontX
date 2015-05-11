@@ -16,6 +16,12 @@
 	#include <atlcom.h>
 #endif
 
+#ifndef FONTX_DLL_EXPORT
+#define FONTX_API __declspec(dllexport)
+#else 
+#define FONTX_API __declspec(dllimport);
+#endif
+
 #pragma comment(lib, "dwrite.lib")
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "d2d1.lib")
@@ -26,7 +32,7 @@
 #endif
 #define SAFE_DISPOSE(x) if(x) { x->Release(); }
 
-	class FONTCOLOR {
+	class FONTX_API FONTCOLOR {
 	private:
 		float _red, _green, _blue, _alpha;
 		float _color[4];
@@ -53,7 +59,7 @@
 	};
 
 //-- Must include the dwrite.lib, dxgi.lib and d2d1.lib
-struct FontSettings {
+struct FONTX_API FontSettings {
 	FontSettings() : fontFamily(L""), fontSize(0), fontColor(FONTCOLOR(0,0,0,0)), fontWeight(), fontStyle() {};
 
 	FontSettings(std::wstring font_Family, float font_size, FONTCOLOR font_color, DWRITE_FONT_WEIGHT font_weight, DWRITE_FONT_STYLE font_style) : fontFamily(font_Family), 
@@ -67,7 +73,8 @@ struct FontSettings {
 	float fontSize;
 	FONTCOLOR fontColor; //-- Red, Green, Blue, Alpha.
 };
-class D2DFontX {
+
+class FONTX_API D2DFontX {
 private:
 	ID2D1SolidColorBrush *TextBrush;
 	ID2D1RenderTarget *TextRenderTarget;
