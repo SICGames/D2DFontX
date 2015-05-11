@@ -7,3 +7,8 @@ D2DFontX Change log
    --Easily transform the D2D Font around with new functions Translate, Scale, Rotate, Skew, setWorldTransform.
 @1.0 
     -- FONTCOLOR Class corrected.
+
+## May 11, 2015 
+
+	-- Created Shared Library and it must be placed in your application execution path.
+	-- Created basic sample.
